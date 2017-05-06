@@ -1,5 +1,7 @@
 package it.caldesi.sample.exchange.data.repository;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
 import it.caldesi.sample.exchange.data.domain.ExchangeRate;
@@ -8,7 +10,7 @@ public interface ExchangeRateRepository extends CrudRepository<ExchangeRate, Lon
 
 	ExchangeRate findByCurrency(String currency);
 
-	Iterable<ExchangeRate> findAll();
+	List<ExchangeRate> findAll();
 
 	void delete(ExchangeRate exchangeRate);
 

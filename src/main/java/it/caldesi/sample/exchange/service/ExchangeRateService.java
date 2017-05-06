@@ -1,6 +1,7 @@
 package it.caldesi.sample.exchange.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -34,7 +35,7 @@ public class ExchangeRateService {
 		rates.stream().forEach(rate -> entityManager.persist(rate));
 	}
 
-	public Iterable<ExchangeRate> getAllRates() {
+	public List<ExchangeRate> getAllRates() {
 		return exchangeRateRepository.findAll();
 	}
 
