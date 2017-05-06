@@ -8,4 +8,8 @@ public interface ExchangeRateRepository extends CrudRepository<ExchangeRate, Lon
 
 	ExchangeRate findByCurrency(String currency);
 
+	Iterable<ExchangeRate> findAll();
+
+	void delete(ExchangeRate exchangeRate);
+
 }

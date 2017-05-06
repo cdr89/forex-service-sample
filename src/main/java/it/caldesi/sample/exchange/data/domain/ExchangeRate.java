@@ -7,7 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "rate", "currency", "date" }))
 @Entity
 public class ExchangeRate implements Serializable {
 
@@ -66,6 +69,11 @@ public class ExchangeRate implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	@Override
+	public String toString() {
+		return "ExchangeRate [id=" + id + ", currency=" + currency + ", rate=" + rate + ", date=" + date + "]";
 	}
 
 }
