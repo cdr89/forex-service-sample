@@ -10,7 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "rate", "currency", "date" }))
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "currency", "date" }))
 @Entity
 public class ExchangeRate implements Serializable {
 
@@ -18,6 +21,7 @@ public class ExchangeRate implements Serializable {
 
 	@Id
 	@GeneratedValue
+	@JsonIgnore
 	private Long id;
 
 	@Column(nullable = false)
@@ -27,6 +31,7 @@ public class ExchangeRate implements Serializable {
 	private Double rate;
 
 	@Column(nullable = false)
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date date;
 
 	protected ExchangeRate() {

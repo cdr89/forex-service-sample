@@ -1,6 +1,7 @@
 package it.caldesi.sample.exchange.service;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -30,13 +31,25 @@ public class ExchangeRateService {
 		log.debug("Deleting all rates");
 		exchangeRateRepository.findAll().forEach(rate -> exchangeRateRepository.delete(rate));
 		entityManager.flush();
-		
+
 		log.debug("Writing new rates");
 		rates.stream().forEach(rate -> entityManager.persist(rate));
 	}
 
 	public List<ExchangeRate> getAllRates() {
 		return exchangeRateRepository.findAll();
+	}
+
+	public List<ExchangeRate> getAllRatesByDate(Date date) {
+		return exchangeRateRepository.findAllByDate(date);
+	}
+
+	public List<ExchangeRate> getAllRatesByCurrency(String currency) {
+		return exchangeRateRepository.findAllByCurrency(currency);
+	}
+
+	public ExchangeRate getByDateAndCurrency(Date date, String currency) {
+		return exchangeRateRepository.findByDateAndCurrency(date, currency);
 	}
 
 }
