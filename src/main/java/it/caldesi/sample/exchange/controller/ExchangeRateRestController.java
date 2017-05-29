@@ -79,4 +79,22 @@ public class ExchangeRateRestController {
 		return new ResponseEntity<ExchangeRate>(rate, HttpStatus.OK);
 	}
 
+	// CONVERSION
+	@RequestMapping(value = "/convert", method = RequestMethod.GET)
+	public ResponseEntity<Double> convertByDateAndCurrency(
+			@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
+			@RequestParam("fromCurrency") String fromCurrency,
+			@RequestParam("toCurrency") String toCurrency,
+			@RequestParam("amount") Double amount) {
+		log.debug("Convert by date: {}, from {}, to {}, amount:{}", date, fromCurrency, toCurrency, amount);
+
+		Double value = exchangeRateService.convert(date, fromCurrency, toCurrency, amount);
+		
+		if (value == null) {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<Double>(value, HttpStatus.OK);
+	}
+
 }

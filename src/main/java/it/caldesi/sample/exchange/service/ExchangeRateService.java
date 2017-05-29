@@ -52,4 +52,32 @@ public class ExchangeRateService {
 		return exchangeRateRepository.findByDateAndCurrency(date, currency);
 	}
 
+	public Double convert(Date date, String fromCurrency, String toCurrency, Double amount) {
+		if (date == null) {
+			date = new Date();
+		}
+
+		double fromExchangeRateVal = 1f;
+		double toExchangeRateVal = 1f;
+
+		try {
+			fromExchangeRateVal = getExchangeRateValue(date, fromCurrency, fromExchangeRateVal);
+			toExchangeRateVal = getExchangeRateValue(date, toCurrency, toExchangeRateVal);
+
+			return (amount * toExchangeRateVal) / fromExchangeRateVal;
+		} catch (Exception e) {
+			log.error("Error on conversion", e);
+			return null;
+		}
+	}
+
+	private double getExchangeRateValue(Date date, String currency, double exchangeRateVal) {
+		if (!"EUR".equalsIgnoreCase(currency)) {
+			ExchangeRate exchangeRate = exchangeRateRepository.findByDateAndCurrency(date, currency);
+			exchangeRateVal = exchangeRate.getRate();
+		}
+		
+		return exchangeRateVal;
+	}
+
 }
