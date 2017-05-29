@@ -14,7 +14,6 @@ Another possibility is to build the project using Maven and then run the resulti
 ```
 java -jar exchange-1.0.jar
 ```
-The built artifact is provided also in the current repository.
 
 
 ## Configuration
@@ -56,18 +55,68 @@ services that contain all the business logic of the application: data manipulati
 asynchronous task that is run at regular intervals
 
 
+## RESTful API
+This project exposes the following RESTful API. All of them can be respond to an HTTP GET request.
+
+##### /api/exchangeRate/list
+Returns all the historical data of exchange rate contained into the database
+
+##### /api/exchangeRate/all
+Accept a parameter "cur" that specifies the currency rate to filter all the exchange rates
+
+##### /api/exchangeRate/all/{date}
+Accept a path parameter that specifies the date (yyyy-MM-dd) to filter all the exchange rates
+
+##### /api/exchangeRate/{date}
+Accept a path parameter date (yyyy-MM-dd) and a query param "cur" in order to return the exchange rate corresponding to the specified date.
+
+
 ## Call examples
 Following some call examples of the RESTful API:
 
+##### /api/exchangeRate/list
 ```
 http://localhost:8080/api/exchangeRate/list
 ```
+```JSON
+[
+  {"currency":"USD","rate":1.0961,"date":"2017-05-04"},
+  {"currency":"JPY","rate":123.29,"date":"2017-05-04"},
+  {"currency":"BGN","rate":1.9558,"date":"2017-05-04"},
+  //...
+]
+```
+
+##### /api/exchangeRate/all
 ```
 http://localhost:8080/api/exchangeRate/all?cur=USD
 ```
+```JSON
+[
+  {"currency":"USD","rate":1.0712,"date":"2017-02-05"},
+  {"currency":"USD","rate":1.0675,"date":"2017-02-06"},
+  {"currency":"USD","rate":1.0665,"date":"2017-02-07"},
+  //...
+]
+```
+
+##### /api/exchangeRate/all/{date}
 ```
 http://localhost:8080/api/exchangeRate/all/2017-05-02
 ```
+```JSON
+[
+  {"currency":"USD","rate":1.0915,"date":"2017-05-01"},
+  {"currency":"JPY","rate":122.55,"date":"2017-05-01"},
+  {"currency":"BGN","rate":1.9558,"date":"2017-05-01"},
+  //...
+]
+```
+
+##### /api/exchangeRate/{date}
 ```
 http://localhost:8080/api/exchangeRate/2017-05-02?cur=USD
+```
+```JSON
+{"currency":"USD","rate":1.0915,"date":"2017-05-01"}
 ```
